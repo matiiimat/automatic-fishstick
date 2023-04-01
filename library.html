@@ -35,11 +35,37 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
+            max-width: 600px;
+            /* You can adjust this value to change the grid size */
+            margin: 0 auto;
+            /* Center the grid horizontally */
         }
 
         .grid-item {
-            width: 100%;
-            height: auto;
+            position: relative;
+            padding: 20px;
+            border: 2px solid black;
+            text-align: center;
+        }
+
+        .play-button {
+            position: absolute;
+            bottom: -30px;
+            /* Adjust this value to change the position of the button */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .play-button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
@@ -51,91 +77,26 @@
     <!-- Display all NFT with metadata: game
         0xd41d3e25d5b6006b20603006908422d978c5a540 [metadata: Background = LightPink] for address 0x03cc9c887cFFd31bdB4c58444EE54873e0E4ddae -->
 
-    <div id="token-images" class="grid-container"></div>
-
     <script>
-        // Replace the following values with your own:
-        const contractAddress = '0xd41d3e25d5b6006b20603006908422d978c5a540';
-        const userAddress = '0x03cc9c887cFFd31bdB4c58444EE54873e0E4ddae';
+        function createGrid(rows, columns) {
+            const gridContainer = document.getElementById('grid-container');
 
-        const ERC721_ABI = [
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "name": "tokenId",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "tokenURI",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "string"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "name": "owner",
-                        "type": "address"
-                    }
-                ],
-                "name": "tokensOfOwner",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "uint256[]"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            }
-        ];
+            for (let i = 0; i < rows * columns; i++) {
+                const gridItem = document.createElement('div');
+                gridItem.classList.add('grid-item');
 
-        async function fetchTokenMetadata(uri) {
-            const response = await fetch(uri);
-            return await response.json();
-        }
+                const playButton = document.createElement('button');
+                playButton.classList.add('play-button');
+                playButton.textContent = 'Play';
 
-        async function displayERC721TokenImages() {
-            if (window.ethereum) {
-                try {
-                    const web3 = new Web3(window.ethereum);
-                    await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    const contract = new web3.eth.Contract(ERC721_ABI, contractAddress);
-                    const tokenIds = await contract.methods.tokensOfOwner(userAddress).call();
-
-                    for (const tokenId of tokenIds) {
-                        const tokenURI = await contract.methods.tokenURI(tokenId).call();
-                        const metadata = await fetchTokenMetadata(tokenURI);
-
-                        if (metadata && metadata.description === 'LightPink' && metadata.image) {
-                            const img = document.createElement('img');
-                            img.src = metadata.image;
-                            img.classList.add('grid-item');
-                            document.getElementById('token-images').appendChild(img);
-                        }
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                    document.getElementById('token-images').innerText = 'Error retrieving token images';
-                }
-            } else {
-                console.error('Ethereum browser not detected');
-                document.getElementById('token-images').innerText = 'Please install an Ethereum browser like MetaMask';
+                gridItem.appendChild(playButton);
+                gridContainer.appendChild(gridItem);
             }
         }
 
-        displayERC721TokenImages();
+        createGrid(3, 3);
     </script>
-
+    <div id="grid-container" class="grid-container"></div>
 
 </body>
 
