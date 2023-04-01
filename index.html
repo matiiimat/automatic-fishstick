@@ -67,12 +67,12 @@
         }
 
         const startChat = async () => {
-            var signature = await web3.eth.personal.sign("Access to chat bot", account)
+            var signature = await web3.eth.personal.sign("Access to library", account)
             fetch('/auth?signature=' + signature)
                 .then(function (response) {
                 })
                 .then(function () {
-                    window.location.href = 'https://gpt-cleaner-bot.onrender.com/gpt';
+                    window.location.href = "library.html";
                 })
         };
 
