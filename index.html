@@ -90,6 +90,10 @@
             var signature = await web3.eth.personal.sign("Please sign in to access your library", account)
             fetch('/auth?signature=' + signature)
                 .then(function (response) {
+                }).then(function () {
+                    // Activate the div with the ID 'Games'
+                    const gamesDiv = document.getElementById('Games');
+                    gamesDiv.style.display = 'block';
                 })
             //.then(function () {
             //    window.location.href = "library.html";
@@ -106,6 +110,12 @@
         document.getElementById('connectWallet').onclick = connect
 
     </script>
+    <button id="activate-button">Activate Games</button>
+    <div id="Games" style="display: none;">
+        <p>Your game content goes here...</p>
+    </div>
+
+
 </body>
 
 </html>
