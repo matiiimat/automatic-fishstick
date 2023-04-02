@@ -56,6 +56,62 @@
             box-shadow: 3px 3px black, 6px 6px 0 0 white;
             transform: translate(-2px, 2px);
         }
+
+        /* essai columns */
+
+        .container {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .column {
+            flex: 1;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            margin: 0 10px;
+            background-color: #fff;
+        }
+
+        .column h3 {
+            margin-top: 0;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .column img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .column p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .column a {
+            display: inline-block;
+            background-color: #007aff;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .column a:hover {
+            background-color: #005fcc;
+        }
+
+        .play-button:hover {
+            background-color: #45a049;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 </head>
@@ -113,6 +169,24 @@
 
     <div id="Games" style="display: none;">
         <p>Welcome to your online library.</p>
+        <div class="column">
+            <h3>Game 1</h3>
+            <img src="https://via.placeholder.com/300x200" alt="iPhone Model 1">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.</p>
+            <a href="#">Play</a>
+        </div>
+        <div class="column">
+            <h3>Game 2</h3>
+            <img src="https://via.placeholder.com/300x200" alt="iPhone Model 2">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.</p>
+            <a href="#">Play</a>
+        </div>
+        <div class="column">
+            <h3>Game 3</h3>
+            <img src="https://via.placeholder.com/300x200" alt="iPhone Model 3">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.</p>
+            <a href="#">Play</a>
+        </div>
     </div>
 
 
