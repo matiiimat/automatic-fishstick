@@ -77,29 +77,36 @@
     <!-- Display all NFT with metadata: game
         0xd41d3e25d5b6006b20603006908422d978c5a540 [metadata: Background = LightPink] for address 0x03cc9c887cFFd31bdB4c58444EE54873e0E4ddae -->
 
-    <script>
-        function createGrid(rows, columns) {
-            const gridContainer = document.getElementById('grid-container');
 
-            for (let i = 0; i < rows * columns; i++) {
-                const gridItem = document.createElement('div');
-                gridItem.classList.add('grid-item');
-
-                const playButton = document.createElement('button');
-                playButton.classList.add('play-button');
-                playButton.textContent = 'Play';
-
-                gridItem.appendChild(playButton);
-                gridContainer.appendChild(gridItem);
-            }
-        }
-
-        createGrid(3, 3);
-    </script>
-
-    <p>TEST</p>
-
-    <div id="grid-container" class="grid-container"></div>
+    <div class="grid-container">
+        <div class="grid-item">
+            <button class="play-button">Play</button>
+        </div>
+        <div class="grid-item">
+            <button class="play-button">Play</button>
+        </div>
+        <div class="grid-item">
+            <button class="play-button">Play</button>
+        </div>
+        <div class="grid-item">
+            <button class="play-button">Play</button>
+        </div>
+        <div class="grid-item">
+            <button class="play-button">Play</button>
+        </div>
+        <div class="grid-item">
+            <button class="play-button">Play</button>
+        </div>
+        <div class="grid-item">
+            <button class="play-button">Play</button>
+        </div>
+        <div class="grid-item">
+            <button class="play-button">Play</button>
+        </div>
+        <div class="grid-item">
+            <button class="play-button">Play</button>
+        </div>
+    </div>
 
 </body>
 
