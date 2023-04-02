@@ -20,7 +20,7 @@
         }
 
         h1 {
-            font-size: 72px;
+            font-size: 36px;
             font-weight: 500;
             letter-spacing: -2px;
             margin-top: 20px;
@@ -91,9 +91,9 @@
             fetch('/auth?signature=' + signature)
                 .then(function (response) {
                 })
-                .then(function () {
-                    window.location.href = "library.html";
-                })
+            //.then(function () {
+            //    window.location.href = "library.html";
+            //})
         };
 
         function showError(message) {
