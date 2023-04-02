@@ -31,37 +31,56 @@
             margin-bottom: 40px;
         }
 
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            max-width: 600px;
-            /* You can adjust this value to change the grid size */
+        /* essai columns */
+
+        .container {
+            display: flex;
+            justify-content: center;
             margin: 0 auto;
-            /* Center the grid horizontally */
-        }
-
-        .grid-item {
-            position: relative;
+            max-width: 1200px;
             padding: 20px;
-            border: 2px solid black;
-            text-align: center;
         }
 
-        .play-button {
-            position: absolute;
-            bottom: -30px;
-            /* Adjust this value to change the position of the button */
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
+        .column {
+            flex: 1;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            margin: 0 10px;
+            background-color: #fff;
+        }
+
+        .column h3 {
+            margin-top: 0;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .column img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .column p {
             font-size: 16px;
-            cursor: pointer;
+            line-height: 1.5;
+        }
+
+        .column a {
+            display: inline-block;
+            background-color: #007aff;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .column a:hover {
+            background-color: #005fcc;
         }
 
         .play-button:hover {
@@ -78,34 +97,28 @@
         0xd41d3e25d5b6006b20603006908422d978c5a540 [metadata: Background = LightPink] for address 0x03cc9c887cFFd31bdB4c58444EE54873e0E4ddae -->
 
 
-    <div class="grid-container">
-        <div class="grid-item">
-            <button class="play-button">Play</button>
+    <div class="container">
+        <div class="column">
+            <h3>Game 1</h3>
+            <img src="https://via.placeholder.com/300x200" alt="iPhone Model 1">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.</p>
+            <a href="#">Play</a>
         </div>
-        <div class="grid-item">
-            <button class="play-button">Play</button>
+        <div class="column">
+            <h3>Game 2</h3>
+            <img src="https://via.placeholder.com/300x200" alt="iPhone Model 2">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.</p>
+            <a href="#">Play</a>
         </div>
-        <div class="grid-item">
-            <button class="play-button">Play</button>
+        <div class="column">
+            <h3>Game 3</h3>
+            <img src="https://via.placeholder.com/300x200" alt="iPhone Model 3">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.</p>
+            <a href="#">Play</a>
         </div>
-        <div class="grid-item">
-            <button class="play-button">Play</button>
-        </div>
-        <div class="grid-item">
-            <button class="play-button">Play</button>
-        </div>
-        <div class="grid-item">
-            <button class="play-button">Play</button>
-        </div>
-        <div class="grid-item">
-            <button class="play-button">Play</button>
-        </div>
-        <div class="grid-item">
-            <button class="play-button">Play</button>
-        </div>
-        <div class="grid-item">
-            <button class="play-button">Play</button>
-        </div>
+    </div>
+
+    </div>
     </div>
 
 </body>
