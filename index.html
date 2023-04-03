@@ -164,31 +164,6 @@
 
         document.getElementById('connectWallet').onclick = connect
 
-        // TEST TOKEN COMPARAISON
-        var tokenContract = new web3.eth.Contract([
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "name": "_owner",
-                        "type": "address"
-                    }
-                ],
-                "name": "balanceOf",
-                "outputs": [
-                    {
-                        "name": "balance",
-                        "type": "uint256"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            }], '0xcea52c1ef5c782701e170ed8daaf8597e8999f4d'); // TOKEN CONTRACT ADDRESS, HARDCODED
-        var balance = tokenContract.methods.balanceOf.call('0x03cc9c887cFFd31bdB4c58444EE54873e0E4ddae'); // HARDCODED, NEEDS TO BE UPDATED TO SIGNED IN ADDRESS
-        let resultElement = document.getElementById("result");
-        resultElement.textContent = balance;
-// END TOKEN COMPARAISON
     </script>
 
     <div id="Games" style="display: none;">
@@ -218,9 +193,6 @@
             </div>
         </div>
     </div>
-
-
-    <div id="result"></div>
 
 </body>
 
