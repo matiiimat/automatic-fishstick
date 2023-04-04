@@ -126,175 +126,50 @@
 
     <script type="text/javascript">
 
-        var account = null;
-        let web3 = new Web3('https://mainnet.infura.io/v3/76baae7d777646a0a4be9efc6be8b52c');
-        const tokenAbi = [
+        const Web3 = require('web3');
+        const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/1d7581b987af425f9265208ace63361d'));
+
+        const balanceOfABI = [
             {
-                inputs: [
-                    { internalType: 'string', name: '_name', type: 'string' },
-                    { internalType: 'string', name: '_symbol', type: 'string' },
-                    { internalType: 'uint256', name: '_decimals', type: 'uint256' },
-                    { internalType: 'uint256', name: '_supply', type: 'uint256' },
-                    { internalType: 'uint256', name: '_txFee', type: 'uint256' },
-                    { internalType: 'uint256', name: '_burnFee', type: 'uint256' },
-                    { internalType: 'uint256', name: '_charityFee', type: 'uint256' },
-                    { internalType: 'address', name: '_FeeAddress', type: 'address' },
-                    { internalType: 'address', name: 'tokenOwner', type: 'address' },
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_owner",
+                        "type": "address"
+                    }
                 ],
-                stateMutability: 'nonpayable',
-                type: 'constructor',
-            },
-            {
-                anonymous: false,
-                inputs: [
-                    { indexed: true, internalType: 'address', name: 'owner', type: 'address' },
-                    { indexed: true, internalType: 'address', name: 'spender', type: 'address' },
-                    { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
+                "name": "balanceOf",
+                "outputs": [
+                    {
+                        "name": "balance",
+                        "type": "uint256"
+                    }
                 ],
-                name: 'Approval',
-                type: 'event',
-            },
-            {
-                anonymous: false,
-                inputs: [
-                    { indexed: true, internalType: 'address', name: 'previousOwner', type: 'address' },
-                    { indexed: true, internalType: 'address', name: 'newOwner', type: 'address' },
-                ],
-                name: 'OwnershipTransferred',
-                type: 'event',
-            },
-            {
-                anonymous: false,
-                inputs: [
-                    { indexed: true, internalType: 'address', name: 'from', type: 'address' },
-                    { indexed: true, internalType: 'address', name: 'to', type: 'address' },
-                    { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
-                ],
-                name: 'Transfer',
-                type: 'event',
-            },
-            { inputs: [], name: 'FeeAddress', outputs: [{ internalType: 'address', name: '', type: 'address' }], stateMutability: 'view', type: 'function' },
-            { inputs: [], name: '_BURN_FEE', outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }], stateMutability: 'view', type: 'function' },
-            { inputs: [], name: '_CHARITY_FEE', outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }], stateMutability: 'view', type: 'function' },
-            { inputs: [], name: '_TAX_FEE', outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }], stateMutability: 'view', type: 'function' },
-            { inputs: [], name: '_owner', outputs: [{ internalType: 'address', name: '', type: 'address' }], stateMutability: 'view', type: 'function' },
-            {
-                inputs: [
-                    { internalType: 'address', name: 'owner', type: 'address' },
-                    { internalType: 'address', name: 'spender', type: 'address' },
-                ],
-                name: 'allowance',
-                outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-                stateMutability: 'view',
-                type: 'function',
-            },
-            {
-                inputs: [
-                    { internalType: 'address', name: 'spender', type: 'address' },
-                    { internalType: 'uint256', name: 'amount', type: 'uint256' },
-                ],
-                name: 'approve',
-                outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { inputs: [{ internalType: 'address', name: 'account', type: 'address' }], name: 'balanceOf', outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }], stateMutability: 'view', type: 'function' },
-            { inputs: [{ internalType: 'uint256', name: '_value', type: 'uint256' }], name: 'burn', outputs: [], stateMutability: 'nonpayable', type: 'function' },
-            { inputs: [], name: 'decimals', outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }], stateMutability: 'view', type: 'function' },
-            {
-                inputs: [
-                    { internalType: 'address', name: 'spender', type: 'address' },
-                    { internalType: 'uint256', name: 'subtractedValue', type: 'uint256' },
-                ],
-                name: 'decreaseAllowance',
-                outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { inputs: [{ internalType: 'uint256', name: 'tAmount', type: 'uint256' }], name: 'deliver', outputs: [], stateMutability: 'nonpayable', type: 'function' },
-            { inputs: [{ internalType: 'address', name: 'account', type: 'address' }], name: 'excludeAccount', outputs: [], stateMutability: 'nonpayable', type: 'function' },
-            { inputs: [{ internalType: 'address', name: 'account', type: 'address' }], name: 'includeAccount', outputs: [], stateMutability: 'nonpayable', type: 'function' },
-            {
-                inputs: [
-                    { internalType: 'address', name: 'spender', type: 'address' },
-                    { internalType: 'uint256', name: 'addedValue', type: 'uint256' },
-                ],
-                name: 'increaseAllowance',
-                outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { inputs: [{ internalType: 'address', name: 'account', type: 'address' }], name: 'isCharity', outputs: [{ internalType: 'bool', name: '', type: 'bool' }], stateMutability: 'view', type: 'function' },
-            { inputs: [{ internalType: 'address', name: 'account', type: 'address' }], name: 'isExcluded', outputs: [{ internalType: 'bool', name: '', type: 'bool' }], stateMutability: 'view', type: 'function' },
-            {
-                inputs: [
-                    { internalType: 'address', name: 'account', type: 'address' },
-                    { internalType: 'uint256', name: 'amount', type: 'uint256' },
-                ],
-                name: 'mint',
-                outputs: [],
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { inputs: [], name: 'name', outputs: [{ internalType: 'string', name: '', type: 'string' }], stateMutability: 'view', type: 'function' },
-            { inputs: [], name: 'owner', outputs: [{ internalType: 'address', name: '', type: 'address' }], stateMutability: 'view', type: 'function' },
-            {
-                inputs: [
-                    { internalType: 'uint256', name: 'tAmount', type: 'uint256' },
-                    { internalType: 'bool', name: 'deductTransferFee', type: 'bool' },
-                ],
-                name: 'reflectionFromToken',
-                outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-                stateMutability: 'view',
-                type: 'function',
-            },
-            { inputs: [], name: 'renounceOwnership', outputs: [], stateMutability: 'nonpayable', type: 'function' },
-            { inputs: [{ internalType: 'address', name: 'account', type: 'address' }], name: 'setAsCharityAccount', outputs: [], stateMutability: 'nonpayable', type: 'function' },
-            { inputs: [], name: 'symbol', outputs: [{ internalType: 'string', name: '', type: 'string' }], stateMutability: 'view', type: 'function' },
-            { inputs: [{ internalType: 'uint256', name: 'rAmount', type: 'uint256' }], name: 'tokenFromReflection', outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }], stateMutability: 'view', type: 'function' },
-            { inputs: [], name: 'totalBurn', outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }], stateMutability: 'view', type: 'function' },
-            { inputs: [], name: 'totalCharity', outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }], stateMutability: 'view', type: 'function' },
-            { inputs: [], name: 'totalFees', outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }], stateMutability: 'view', type: 'function' },
-            { inputs: [], name: 'totalSupply', outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }], stateMutability: 'view', type: 'function' },
-            {
-                inputs: [
-                    { internalType: 'address', name: 'recipient', type: 'address' },
-                    { internalType: 'uint256', name: 'amount', type: 'uint256' },
-                ],
-                name: 'transfer',
-                outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            {
-                inputs: [
-                    { internalType: 'address', name: 'sender', type: 'address' },
-                    { internalType: 'address', name: 'recipient', type: 'address' },
-                    { internalType: 'uint256', name: 'amount', type: 'uint256' },
-                ],
-                name: 'transferFrom',
-                outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-                stateMutability: 'nonpayable',
-                type: 'function',
-            },
-            { inputs: [{ internalType: 'address', name: 'newOwner', type: 'address' }], name: 'transferOwnership', outputs: [], stateMutability: 'nonpayable', type: 'function' },
-            {
-                inputs: [
-                    { internalType: 'uint256', name: '_txFee', type: 'uint256' },
-                    { internalType: 'uint256', name: '_burnFee', type: 'uint256' },
-                    { internalType: 'uint256', name: '_charityFee', type: 'uint256' },
-                ],
-                name: 'updateFee',
-                outputs: [],
-                stateMutability: 'nonpayable',
-                type: 'function',
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
             },
         ];
 
-        let tokenContract = new web3.eth.Contract(tokenAbi, 0xcea52c1ef5c782701e170ed8daaf8597e8999f4d);
-        var WalletTokenBalance = await tokenContract.methods.balanceOf(WalletAddress).call();
-        console.log("TOKEN BALANCE = ");
-        console.log(WalletTokenBalance);
+        const tokenContract = "0xcea52c1ef5c782701e170ed8daaf8597e8999f4d"
+        const tokenHolder = "0x03cc9c887cFFd31bdB4c58444EE54873e0E4ddae"
+
+        // Define the ERC-20 token contract
+        const contract = new web3.eth.Contract(balanceOfABI, tokenContract)
+
+        async function getTokenBalance() {
+            // Execute balanceOf() to retrieve the token balance
+            const result = await contract.methods.balanceOf(tokenHolder).call(); // 29803630997051883414242659
+
+            // Convert the value from Wei to Ether
+            const formattedResult = web3.utils.fromWei(result, "ether"); // 29803630.997051883414242659
+
+            console.log(formattedResult);
+        }
+
+        getTokenBalance();
+
+        var account = null;
 
         const connect = async () => {
             if (window.ethereum) {
