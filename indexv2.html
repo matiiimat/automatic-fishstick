@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MetaMask Connect Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.1/web3.min.js"></script>
     <style>
         .connect-btn {
             position: absolute;
@@ -22,8 +23,18 @@
 </head>
 
 <body>
-    <script src="app.js"></script>
-    <button class="enableEthereumButton">Enable Ethereum</button>
+    <script>/* To connect using MetaMask */
+        async function connect() {
+            if (window.ethereum) {
+                await window.ethereum.request({ method: "eth_requestAccounts" });
+                window.web3 = new Web3(window.ethereum); const account = web3.eth.accounts;     //Get the current MetaMask selected/active wallet
+                const walletAddress = account.givenProvider.selectedAddress; console.log(`Wallet: ${walletAddress}`);
+
+            } else {
+                console.log("No wallet");
+            }
+        }
+    </script> <input type="button" value="Connect Wallet" onclick="connect();">
     <h2>Account: <span class="showAccount"></span></h2>
 </body>
 
