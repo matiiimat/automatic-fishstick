@@ -34,8 +34,33 @@
                 console.log("No wallet");
             }
         }
+        const siweSign = async (siweMessage) => {
+            try {
+                const from = accounts[0];
+                const msg = `0x${Buffer.from(siweMessage, 'utf8').toString('hex')}`;
+                const sign = await ethereum.request({
+                    method: 'personal_sign',
+                    params: [msg, from, 'Example password'],
+                });
+                siweResult.innerHTML = sign;
+            } catch (err) {
+                console.error(err);
+                siweResult.innerHTML = `Error: ${err.message}`;
+            }
+        };
+        const siwe = document.getElementById('siwe');
+        siwe.onclick = async () => {
+            const domain = window.location.host;
+            const from = accounts[0];
+            const siweMessage = `${domain} wants you to sign in with your Ethereum account:\n${from}\n\nI accept the MetaMask Terms of Service: https://community.metamask.io/tos\n\nURI: https://${domain}\nVersion: 1\nChain ID: 1\nNonce: 32891757\nIssued At: 2021-09-30T16:25:24.000Z`;
+            siweSign(siweMessage);
+        };
+
     </script>
     <input type="button" value="Connect Wallet" onclick="connect();">
+    <button class="btn btn-primary btn-lg btn-block mb-3" id="siwe" disabled>
+        Sign In With Ethereum
+    </button>
 </body>
 
 </html>
