@@ -7,186 +7,35 @@
     <title>MetaMask Connect Example</title>
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <style>
-        .container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100vh;
-        }
-
-        .button {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            outline: none;
-            box-shadow: 0 1px 5px 0 #e6e9ef;
-            background: #ffffff;
-            color: #000;
-            border-radius: 99px;
-            padding: 16px 32px;
-            font-family: 'Quicksand', sans-serif;
-            font-size: 24px;
-            font-weight: 500;
-            cursor: pointer;
-        }
-
-        #connectButton {
-            margin-bottom: 16px;
-            color: #eb874b;
-        }
-
-        #walletID span {
-            max-width: 90%;
-            margin: 0 auto;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        #mobileDeviceWarning {
-            display: none;
-            margin-top: 24px;
-            color: rgb(247, 47, 47);
-        }
-
-        #mobileDeviceWarning.show {
-            display: block;
-        }
-
-        .alert {
-            z-index: 10;
-            position: fixed;
-            left: 0;
-            top: 0;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100vh;
-            background: #ffffff;
-        }
-
-        .alert.show {
-            display: flex;
-        }
-
-        .alert .button {
-            margin-top: 24px;
-        }
-
-        /* Loading dots styles */
-        @keyframes opacity {
-            0% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0;
-            }
-        }
-
-        .loadingButton {
-            pointer-events: none;
-        }
-
-        .loadingButton #loading {
-            display: flex;
-        }
-
-        #loading {
+        .connect-btn {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: #fff;
-            border-radius: 99px;
-        }
-
-        #loading span:not(:last-child) {
-            margin-right: 5px;
-        }
-
-        #loading span {
-            animation-name: opacity;
-            animation-duration: 1s;
-            animation-iteration-count: infinite;
-        }
-
-        #loading span:nth-child(2) {
-            animation-delay: 100ms;
-            animation-delay: 100ms;
-        }
-
-        #loading span:nth-child(3) {
-            animation-delay: 300ms;
-            animation-delay: 300ms;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
     <script>/* To connect using MetaMask */
+        async function connect() {
+            if (window.ethereum) {
+                await window.ethereum.request({ method: "eth_requestAccounts" });
+                window.web3 = new Web3(window.ethereum); const account = web3.eth.accounts;     //Get the current MetaMask selected/active wallet
+                const walletAddress = account.givenProvider.selectedAddress; console.log(`Wallet: ${walletAddress}`);
 
-        const connectButton = document.getElementById("connectButton");
-        const walletID = document.getElementById("walletID");
-
-        connectButton.addEventListener("click", () => {
-            if (typeof window.ethereum !== "undefined") {
-                ethereum
-                    .request({ method: "eth_requestAccounts" })
-                    .then((accounts) => {
-                        const account = accounts[0]
-
-                        walletID.innerHTML = `Wallet connected: ${account}`;
-                    }).catch((error) => {
-                        // Handle error
-                        console.log(error, error.code);
-
-                        // 4001 - The request was rejected by the user
-                        // -32602 - The parameters were invalid
-                        // -32603- Internal error
-                    });
             } else {
-                window.open("https://metamask.io/download/", "_blank");
+                console.log("No wallet");
             }
-        })
-
-
-
+        }
     </script>
-    <div class="container">
-        <button class="button" id="connectButton">
-            Connect wallet
-
-            <span id="loading">
-                <span>&bull;</span><span>&bull;</span><span>&bull;</span>
-            </span>
-        </button>
-
-        <div id="walletID">Your wallet is not connected yet.</div>
-
-        <div id="mobileDeviceWarning">
-            If you are on a mobile phone, please use MetaMask
-            application's browser to connect.
-        </div>
-    </div>
-
-    <div class="alert" id="installAlert">
-        Please refresh your browser after installing the Metamask plugin
-
-        <button class="button" id="reloadButton">Reload page</button>
-    </div>
-
-
+    <input type="button" value="Connect Wallet" onclick="connect();">
 </body>
 
 </html>
