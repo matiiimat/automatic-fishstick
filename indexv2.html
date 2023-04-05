@@ -1,246 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Library</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaMask Connect Example</title>
     <style>
-        body {
-            background-color: #000000;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-size: 18px;
-            line-height: 1.5;
-            color: #ffffff;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-
-        h1 {
-            font-size: 36px;
-            font-weight: 500;
-            letter-spacing: -2px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        p {
-            font-size: 24px;
-            font-weight: 300;
-            margin-top: 0;
-            margin-bottom: 40px;
-        }
-
-        button {
-            display: inline-block;
+        .connect-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
             padding: 10px 20px;
-            background-color: #FF5300;
-            color: #ffffff;
-            text-transform: uppercase;
-            font-weight: 600;
-            font-size: 14px;
-            letter-spacing: 1px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            text-decoration: none;
-        }
-
-        button:hover {
-            box-shadow: 3px 3px black, 6px 6px 0 0 white;
-            transform: translate(-2px, 2px);
-        }
-
-        /* essai columns */
-
-        .container {
-            display: flex;
-            justify-content: center;
-            margin: 0 auto;
-            max-width: 1200px;
-            padding: 20px;
-        }
-
-        .column {
-            flex: 1;
-            padding: 20px;
-            border: 1px solid #D4A0FF;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-            margin: 0 10px;
-            background-color: #D4A0FF;
-        }
-
-        .column h3 {
-            margin-top: 0;
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        .column img {
-            width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-        }
-
-        .column p {
-            font-size: 16px;
-            line-height: 1.5;
-        }
-
-        .column a {
-            color: #000000;
-            display: inline-block;
-            background-color: #FF5300;
-            color: #ffffff;
-            padding: 10px 20px;
-            font-size: 16px;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-top: 20px;
-        }
-
-        .column a:hover {
-            background-color: #005fcc;
-        }
-
-        .play-button:hover {
-            background-color: #45a049;
         }
     </style>
-
-    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 </head>
 
 <body>
-    <h1>Library</h1>
-    <p><b>Wallet address:</b> <span id="wallet-address"></span></p>
-
-    <button id="connectWallet"><b>Connect</b></button>
-    <button id="chat"><b>Access Library</b></button>
-
-    <div id="display"></div>
-
-    <script type="text/javascript">
-
-        const Web3 = require('web3');
-        const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/1d7581b987af425f9265208ace63361d'));
-
-        const balanceOfABI = [
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "name": "_owner",
-                        "type": "address"
-                    }
-                ],
-                "name": "balanceOf",
-                "outputs": [
-                    {
-                        "name": "balance",
-                        "type": "uint256"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-        ];
-
-        const tokenContract = "0xcea52c1ef5c782701e170ed8daaf8597e8999f4d"
-        const tokenHolder = "0x03cc9c887cFFd31bdB4c58444EE54873e0E4ddae"
-
-        // Define the ERC-20 token contract
-        const contract = new web3.eth.Contract(balanceOfABI, tokenContract)
-
-        async function getTokenBalance() {
-            // Execute balanceOf() to retrieve the token balance
-            const result = await contract.methods.balanceOf(tokenHolder).call(); // 29803630997051883414242659
-
-            // Convert the value from Wei to Ether
-            const formattedResult = web3.utils.fromWei(result, "ether"); // 29803630.997051883414242659
-
-            console.log(formattedResult);
-        }
-
-        getTokenBalance();
-
-        var account = null;
-
-        const connect = async () => {
-            if (window.ethereum) {
-                await window.ethereum.send('eth_requestAccounts');
-                window.web3 = new Web3(window.ethereum);
-
-                var accounts = await web3.eth.getAccounts();
-                account = accounts[0];
-                const formattedAddress = `${account?.slice(0, 6)}...${account?.slice(-4)}`;
-                document.getElementById('wallet-address').textContent = formattedAddress;
-                document.getElementById('chat').onclick = accessLibrary
-            }
-        }
-
-        const accessLibrary = async () => {
-            var signature = await web3.eth.personal.sign("Please sign in to access your library", account)
-            fetch('/auth?signature=' + signature)
-                .then(function (response) {
-                }).then(function () {
-                    // Activate the div with the ID 'Games'
-                    const gamesDiv = document.getElementById('Games');
-                    gamesDiv.style.display = 'block';
-                })
-            //.then(function () {
-            //    window.location.href = "library.html";
-            //})
-        };
-
-        function showError(message) {
-            const errorMessage = document.getElementById("error-message");
-            errorMessage.textContent = message;
-            errorMessage.style.display = "block";
-        }
-
-
-        document.getElementById('connectWallet').onclick = connect
-
-
-    </script>
-
-    <div id="Games" style="display: none;">
-        <p>Welcome to your online library.</p>
-        <div class="container">
-            <div class="column">
-                <h3>Chalkduster III</h3>
-                <img src="https://dl.openseauserdata.com/cache/originImage/files/2848026ea1e5cfd253f68fdad25353f2.png"
-                    alt="Chalkduster III">
-                <p>Erase your way to victory! Unleash your chalk-cleaning prowess and conquer the board in this exciting
-                    game.</p>
-                <a href="#">Play</a>
-            </div>
-            <div class="column">
-                <h3>Attack of The Flies 2</h3>
-                <img src="https://dl.openseauserdata.com/cache/originImage/files/14a92bab0ed2680424929bd1cf51ef29.png"
-                    alt="Attack of The Flies 2">
-                <p>Experience the unparalleled joy of swatting flies! Dive into this adventure and become the ultimate
-                    champion.</p>
-                <a href="#">Play</a>
-            </div>
-            <div class="column">
-                <h3>Game 3</h3>
-                <img src="https://via.placeholder.com/300x200" alt="Game 3">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.</p>
-                <a href="#">Buy</a>
-            </div>
-        </div>
-    </div>
-
-
-
-
+    <button id="connect-btn" class="connect-btn">Connect MetaMask</button>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>
