@@ -121,6 +121,8 @@
 
     <button id="connectWallet"><b>Connect</b></button>
     <button id="chat"><b>Access Library</b></button>
+    <button id="consoleLog"><b>Console Log</b></button>
+
 
     <div id="display"></div>
 
@@ -164,9 +166,6 @@
 
         document.getElementById('connectWallet').onclick = connect
 
-        const Web3 = require('web3')
-        const rpcURL = 'https://mainnet.infura.io/v3/76baae7d777646a0a4be9efc6be8b52c'
-        const web3 = new Web3(rpcURL)
 
         let tokenAddress = "0xcea52c1ef5c782701e170ed8daaf8597e8999f4d";
         let walletAddress = "0x03cc9c887cffd31bdb4c58444ee54873e0e4ddae";
@@ -205,6 +204,8 @@
         getBalance().then(function (result) {
             console.log(result);
         });
+
+        document.getElementById('consoleLog').onclick = getBalance
 
 
     </script>
