@@ -27,6 +27,15 @@
             margin-bottom: 20px;
         }
 
+
+        h2 {
+            font-size: 24px;
+            font-weight: 250;
+            letter-spacing: -2px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
         p {
             font-size: 24px;
             font-weight: 300;
@@ -121,14 +130,12 @@
 
     <button id="connectWallet"><b>Connect</b></button>
     <button id="chat"><b>Access Library</b></button>
-    <button id="getBalanceBtn"><b>Get Balance</b></button>
-
-
-    <div id="display"></div>
 
     <script type="text/javascript">
 
         var account = null;
+        var formattedAddress = null; // Declare formattedAddress as a global variable
+
 
         const connect = async () => {
             if (window.ethereum) {
@@ -137,7 +144,7 @@
 
                 var accounts = await web3.eth.getAccounts();
                 account = accounts[0];
-                const formattedAddress = `${account?.slice(0, 6)}...${account?.slice(-4)}`;
+                formattedAddress = `${account?.slice(0, 6)}...${account?.slice(-4)}`;
                 document.getElementById('wallet-address').textContent = formattedAddress;
                 document.getElementById('chat').onclick = accessLibrary
             }
@@ -152,9 +159,7 @@
                     const gamesDiv = document.getElementById('Games');
                     gamesDiv.style.display = 'block';
                 })
-            //.then(function () {
-            //    window.location.href = "library.html";
-            //})
+
         };
 
         function showError(message) {
@@ -167,56 +172,11 @@
         document.getElementById('connectWallet').onclick = connect
 
 
-        let tokenAddress = "0xcea52c1ef5c782701e170ed8daaf8597e8999f4d";
-        let walletAddress = "0x03cc9c887cffd31bdb4c58444ee54873e0e4ddae";
-
-        // The minimum ABI to get ERC20 Token balance
-        const minABI = [
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "_id",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "uri",
-                "outputs": [
-                    {
-                        "internalType": "string",
-                        "name": "",
-                        "type": "string"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            }
-        ];
-
-        let contract = new web3.eth.Contract(minABI, tokenAddress);
-
-        async function getBalance() {
-            balance = await contract.methods.balanceOf(walletAddress).call();
-            return balance;
-        }
-
-        function initGetBalance() {
-            getBalance().then(function (result) {
-                console.log(result);
-            });
-        }
-
-        // Add an event listener to the button
-        document.getElementById("getBalanceBtn").addEventListener("click", initGetBalance);
-
-
-
     </script>
 
     <div id="Games" style="display: none;">
-        <p>Welcome to your online library.</p>
+        <br>
+        <h2>Games</h2>
         <div class="container">
             <div class="column">
                 <h3>Chalkduster III</h3>
