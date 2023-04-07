@@ -121,7 +121,7 @@
 
     <button id="connectWallet"><b>Connect</b></button>
     <button id="chat"><b>Access Library</b></button>
-    <button id="consoleLog"><b>Console Log</b></button>
+    <button id="getBalanceBtn"><b>Get Balance</b></button>
 
 
     <div id="display"></div>
@@ -196,16 +196,21 @@
         ];
 
         let contract = new web3.eth.Contract(minABI, tokenAddress);
+
         async function getBalance() {
             balance = await contract.methods.balanceOf(walletAddress).call();
             return balance;
         }
 
-        getBalance().then(function (result) {
-            console.log(result);
-        });
+        function initGetBalance() {
+            getBalance().then(function (result) {
+                console.log(result);
+            });
+        }
 
-        document.getElementById('consoleLog').onclick = getBalance
+        // Add an event listener to the button
+        document.getElementById("getBalanceBtn").addEventListener("click", initGetBalance);
+
 
 
     </script>
