@@ -35,3 +35,51 @@ function showError(message) {
 
 
 document.getElementById('connectWallet').onclick = connect
+
+
+// test token check
+const walletAddress = 0x03cc9c887cffd31bdb4c58444ee54873e0e4ddae
+const balance = await erc721.balanceOf(walletAddress);
+
+
+const getTokensId = async (recipient, index) => {
+    try {
+        const result = nonfungibleManager.tokenOfOwnerByIndex(recipient, index);
+        return result;
+    } catch (error) {
+        console.log(error, "the error for getTokensId");
+    }
+};
+
+const getPosition = async (id) => {
+    try {
+        const position = erc721.positions(id);
+        return position;
+    } catch (error) {
+        console.log(error, "error from getPosition");
+    }
+};
+
+let nfts = [];
+
+let numbers = [];
+for (let i = 0; i < Number(balance._hex); i++) {
+    numbers.push(i);
+}
+await Promise.all(
+    numbers.map(async (i) => {
+        await getTokensId(walletAddress, i).then(async (res) => {
+            let tokenId = Number(res?._hex);
+            await getPosition(tokenId).then((result) => {
+                nfts.push({
+                    'tokenId': tokenId
+                });
+            });
+        });
+    })
+);
+console.log(nfts)
+return nfts
+
+//END
+
