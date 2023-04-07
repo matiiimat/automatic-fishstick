@@ -1,66 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MetaMask Connect Example</title>
-    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-    <style>
-        .connect-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
+    <title>Get Public Key</title>
 </head>
 
 <body>
-    <script>/* To connect using MetaMask */
-        async function connect() {
-            if (window.ethereum) {
-                await window.ethereum.request({ method: "eth_requestAccounts" });
-                window.web3 = new Web3(window.ethereum); const account = web3.eth.accounts;     //Get the current MetaMask selected/active wallet
-                const walletAddress = account.givenProvider.selectedAddress; console.log(`Wallet: ${walletAddress}`);
+    <div style="margin-bottom:5px">Enable Metamask, then click on the sign button and sign with your wallet to get your
+        public key</div>
+    <div style="margin-bottom:5px"><button onclick="enableMM()">Enable Metamask</button></div>
+    <div style="margin-bottom:20px"><button onclick="findPublicKey()">Sign</button></div>
+    <div>Public key: <span id='public-key'></span></div>
+    <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js" type="application/javascript"></script>
+    <script>
 
-            } else {
-                console.log("No wallet");
-            }
+        function enableMM() {
+            window.ethereum.send('eth_requestAccounts');
         }
-        const siweSign = async (siweMessage) => {
-            try {
-                const from = accounts[0];
-                const msg = `0x${Buffer.from(siweMessage, 'utf8').toString('hex')}`;
-                const sign = await ethereum.request({
-                    method: 'personal_sign',
-                    params: [msg, from, 'Example password'],
-                });
-                siweResult.innerHTML = sign;
-            } catch (err) {
-                console.error(err);
-                siweResult.innerHTML = `Error: ${err.message}`;
-            }
-        };
-        const siwe = document.getElementById('siwe');
-        siwe.onclick = async () => {
-            const domain = window.location.host;
-            const from = accounts[0];
-            const siweMessage = `${domain} wants you to sign in with your Ethereum account:\n${from}\n\nI accept the MetaMask Terms of Service: https://community.metamask.io/tos\n\nURI: https://${domain}\nVersion: 1\nChain ID: 1\nNonce: 32891757\nIssued At: 2021-09-30T16:25:24.000Z`;
-            siweSign(siweMessage);
+
+        async function findPublicKey() {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = provider.getSigner();
+            const message = 'Get Public Key';
+            const signature = await signer.signMessage(message);
+            const digest = ethers.utils.arrayify(ethers.utils.hashMessage(message));
+            const publicKey = await ethers.utils.recoverPublicKey(digest, signature);
+            const address = await ethers.utils.recoverAddress(digest, signature);
+
+            document.getElementById("public-key").innerHTML = "" + publicKey;
         };
 
     </script>
-    <input type="button" value="Connect Wallet" onclick="connect();">
-    <button class="btn btn-primary btn-lg btn-block mb-3" id="siwe">
-        Sign In With Ethereum
-    </button>
 </body>
 
 </html>
