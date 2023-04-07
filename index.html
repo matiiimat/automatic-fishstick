@@ -173,20 +173,9 @@
 
         document.getElementById('connectWallet').onclick = connect
 
-        function displayFormattedAddress() {
-            if (formattedAddress) {
-                document.getElementById('displayAddressBtn').textContent = formattedAddress;
-            } else {
-                // You can show an error message here if the formattedAddress is not available yet
-            }
-        }
-        document.getElementById('displayAddressBtn').addEventListener("click", displayFormattedAddress);
-
+        document.getElementById('wallet-address2').textContent = formattedAddress;
 
     </script>
-
-    <button id="displayAddressBtn">Display Address</button>
-    <div id="displayAddress"></div>
 
     <div id="Games" style="display: none;">
         <br>
@@ -209,7 +198,7 @@
                 <a href="#">Play</a>
             </div>
             <div class="column">
-                <h3>Game 3</h3>
+                <p><span id="wallet-address2"></span></p>
                 <img src="https://via.placeholder.com/300x200" alt="Game 3">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.</p>
                 <a href="#">Buy</a>
