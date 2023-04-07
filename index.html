@@ -136,6 +136,7 @@
     <script type="text/javascript">
 
         var account = null;
+        var formattedAddress = null; // Declare formattedAddress as a global variable
 
 
         const connect = async () => {
@@ -145,7 +146,7 @@
 
                 var accounts = await web3.eth.getAccounts();
                 account = accounts[0];
-                const formattedAddress = `${account?.slice(0, 6)}...${account?.slice(-4)}`;
+                formattedAddress = `${account?.slice(0, 6)}...${account?.slice(-4)}`;
                 document.getElementById('wallet-address').textContent = formattedAddress;
                 document.getElementById('chat').onclick = accessLibrary
             }
