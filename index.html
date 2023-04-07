@@ -173,8 +173,20 @@
 
         document.getElementById('connectWallet').onclick = connect
 
+        function displayFormattedAddress() {
+            if (formattedAddress) {
+                document.getElementById('displayAddress').textContent = formattedAddress;
+            } else {
+                // You can show an error message here if the formattedAddress is not available yet
+            }
+        }
+        document.getElementById('displayAddressBtn').addEventListener("click", displayFormattedAddress);
+
 
     </script>
+
+    <button id="displayAddressBtn">Display Address</button>
+    <div id="displayAddress"></div>
 
     <div id="Games" style="display: none;">
         <br>
