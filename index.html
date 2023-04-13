@@ -506,23 +506,42 @@
             }
         ]
 
-        const tokenContract = "0xdD38047D2B27a595cC323263572DA109B8E2cEdA"
-        const tokenHolder = "0x03cc9c887cFFd31bdB4c58444EE54873e0E4ddae"
+        const game1Contract = "0xdD38047D2B27a595cC323263572DA109B8E2cEdA" // game 1
+        const tokenHolder = "0x03cc9c887cFFd31bdB4c58444EE54873e0E4ddae" // formattedAddress
 
         // Define the ERC-20 token contract
-        const contract = new web3.eth.Contract(balanceOfABI, tokenContract)
+        const contract = new web3.eth.Contract(balanceOfABI, game1Contract)
 
         async function getTokenBalance() {
             // Execute balanceOf() to retrieve the token balance
             const result = await contract.methods.balanceOf(tokenHolder, 1).call();
 
-
             console.log(result);
+
+            updateButton(result);
+        }
+        function updateButton(result) {
+            const actionButton = document.getElementById('actionButton');
+
+            if (result === '1') {
+                actionButton.innerText = 'Play';
+                actionButton.onclick = () => {
+                    console.log('Play button clicked');
+                    // Add any additional logic for the "Play" action
+                };
+            } else if (result === '0') {
+                actionButton.innerText = 'Buy';
+                actionButton.onclick = () => {
+                    window.location.href = 'https://opensea.io/collection/unidentified-contract-3681';
+                };
+            }
         }
 
         getTokenBalance();
     </script>
-
+    <div>
+        <button id="actionButton"></button>
+    </div>
     <div id="Games" style="display: none;">
         <br>
         <h2>Games</h2>
