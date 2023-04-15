@@ -173,6 +173,9 @@
 
         document.getElementById('connectWallet').onclick = connect
 
+
+        // BELOW IS CHECK TO SEE IF WALLET OWNS THE TOKEN
+
         const balanceOfABI = [
             {
                 "inputs": [],
@@ -509,8 +512,7 @@
         const game1Contract = "0xdD38047D2B27a595cC323263572DA109B8E2cEdA" // game 1
         const tokenHolder = "0x03cc9c887cFFd31bdB4c58444EE54873e0E4ddae" // formattedAddress
 
-        // Define the ERC-20 token contract
-        const contract = new web3.eth.Contract(balanceOfABI, game1Contract)
+        const contract = new web3.eth.Contract(balanceOfABI, game1Contract) // Define the ERC-20 token contract
 
         async function getTokenBalance() {
             // Execute balanceOf() to retrieve the token balance
@@ -521,6 +523,8 @@
         }
 
         getTokenBalance();
+        // END TOKEN CHECK
+
     </script>
 
     <div id="Games" style="display: none;">
