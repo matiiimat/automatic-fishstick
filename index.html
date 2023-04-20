@@ -510,19 +510,19 @@
         ]
 
         const game1Contract = "0xdD38047D2B27a595cC323263572DA109B8E2cEdA" // game 1
-        const tokenHolder = "0x03cc9c887cFFd31bdB4c58444EE54873e0E4ddae" // formattedAddress
+        const tokenHolder = formattedAddress // formattedAddress
 
         const contract = new web3.eth.Contract(balanceOfABI, game1Contract) // Define the ERC-20 token contract
 
         async function getTokenBalance() {
             // Execute balanceOf() to retrieve the token balance
             const result = await contract.methods.balanceOf(tokenHolder, 1).call();
-
-
             console.log(result);
         }
 
-        getTokenBalance();
+        document.getElementById('getBalanceBtn').addEventListener("click", getTokenBalance);
+
+        //getTokenBalance();
         // END TOKEN CHECK
 
     </script>
@@ -530,6 +530,8 @@
     <div id="Games" style="display: none;">
         <br>
         <h2>Games</h2>
+        <button id="getBalanceBtn">Scan NFT</button>
+
         <div class="container">
             <div class="column">
                 <h3>Chalkduster III</h3>
