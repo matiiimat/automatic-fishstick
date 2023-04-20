@@ -520,8 +520,32 @@
             console.log(result);
         }
 
-        document.getElementById('getBalanceBtn').addEventListener("click", getTokenBalance);
+        document.getElementById('getBalanceBtn').addEventListener('click', async () => {
+            try {
+                const result = await getTokenBalance();
+                document.getElementById('balanceResult').textContent = 'Games Owned: ' + result;
+            } catch (error) {
+                console.error('Error getting token balance:', error);
+            }
+        });
+        /*
+        function updateButton(result) {
+            const actionButton = document.getElementById('actionButton');
 
+            if (result === '1') {
+                actionButton.innerText = 'Play';
+                actionButton.onclick = () => {
+                    console.log('Play button clicked');
+                    // Add any additional logic for the "Play" action
+                };
+            } else if (result === '0') {
+                actionButton.innerText = 'Buy';
+                actionButton.onclick = () => {
+                    window.location.href = 'https://opensea.io/collection/unidentified-contract-3681';
+                };
+            }
+        }
+        */
         //getTokenBalance();
         // END TOKEN CHECK
 
@@ -531,6 +555,7 @@
         <br>
         <h2>Games</h2>
         <button id="getBalanceBtn">Scan NFT</button>
+        <p id="balanceResult">Games Owned: </p>
 
         <div class="container">
             <div class="column">
