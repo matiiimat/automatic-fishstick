@@ -518,7 +518,7 @@
 
         async function getTokenBalance() {
             // Execute balanceOf() to retrieve the token balance
-            const result = await web3.contract.methods.balanceOf(tokenHolder, 1).call();
+            const result = await Contract.methods.balanceOf(tokenHolder, 1).call();
             console.log(result);
         }
         document.addEventListener('DOMContentLoaded', function () {
