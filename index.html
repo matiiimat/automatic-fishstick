@@ -121,8 +121,9 @@
             background-color: #45a049;
         }
     </style>
+    <script src="https://unpkg.com/@metamask/legacy-web3@latest/dist/metamask.web3.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script> -->
 </head>
 
 <body>
@@ -514,7 +515,7 @@
         const game1Contract = "0xdD38047D2B27a595cC323263572DA109B8E2cEdA" // game 1
         const tokenHolder = formattedAddress // formattedAddress
 
-        const contract = new web3.eth.Contract(balanceOfABI, game1Contract) // Define the ERC-20 token contract
+        //const contract = new web3.eth.Contract(balanceOfABI, game1Contract) // Define the ERC-20 token contract
 
         async function getTokenBalance() {
             console.log(formattedAddress);
