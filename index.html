@@ -512,20 +512,19 @@
         ]
 
         const game1Contract = "0xdD38047D2B27a595cC323263572DA109B8E2cEdA" // game 1
-        const tokenHolder = formattedAddress // formattedAddress
+        const tokenHolder = "0x578aDa25F97E67C31e8EC51E7C1B43d4b6A0Fba0" // formattedAddress
 
         //const contract = new web3.eth.Contract(balanceOfABI, game1Contract) // Define the ERC-20 token contract
 
         async function getTokenBalance() {
             // Execute balanceOf() to retrieve the token balance
-            const result = await contract.methods.balanceOf(tokenHolder, 1).call();
+            const result = await Contract.methods.balanceOf(tokenHolder, 1).call();
             console.log(result);
         }
         document.addEventListener('DOMContentLoaded', function () {
 
             document.getElementById('getBalanceBtn').addEventListener('click', async () => {
                 try {
-                    console.log(web3);
                     const result = await getTokenBalance();
                     document.getElementById('balanceResult').textContent = 'Games Owned: ' + result;
                 } catch (error) {
