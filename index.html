@@ -513,7 +513,7 @@
         ]
 
         const game1Contract = "0xdD38047D2B27a595cC323263572DA109B8E2cEdA" // game 1
-        const tokenHolder = formattedAddress // formattedAddress
+        const tokenHolder = 0x03cc9c887cFFd31bdB4c58444EE54873e0E4ddae // formattedAddress
 
         //const contract = new web3.eth.Contract(balanceOfABI, game1Contract) // Define the ERC-20 token contract
 
@@ -521,10 +521,16 @@
             console.log(formattedAddress);
             // Execute balanceOf() to retrieve the token balance
             //const result = await Contract.methods.balanceOf(tokenHolder, 1).call();
+            //TEST
             ethereum.request({ method: 'eth_getBalance', params: [account, 'latest'] }).then(result => {
+                let wei = parseInt(result, 16);
+                let balance = wei / (10 ** 18);
+                console.log(balance + " ETH");
                 console.log(result);
 
             });
+            //FIN TEST
+            //console.log(result);
         }
         document.addEventListener('DOMContentLoaded', function () {
 
