@@ -155,8 +155,8 @@
 
         const accessLibrary = async () => {
             var signature = await web3.eth.personal.sign("Please sign in to access your library", account)
-            fetch('/auth?signature=' + signature)
-                .then(function () {
+                .then(function (response) {
+                }).then(function () {
                     // Activate the div with the ID 'Games'
                     const gamesDiv = document.getElementById('Games');
                     gamesDiv.style.display = 'block';
@@ -519,6 +519,7 @@
             // Execute balanceOf() to retrieve the token balance
             const result = await Contract.methods.balanceOf(tokenHolder, 1).call();
             console.log(result);
+            console.log(formattedAddress);
         }
         document.addEventListener('DOMContentLoaded', function () {
 
