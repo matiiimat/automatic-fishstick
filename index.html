@@ -520,8 +520,11 @@
         async function getTokenBalance() {
             console.log(formattedAddress);
             // Execute balanceOf() to retrieve the token balance
-            const result = await Contract.methods.balanceOf(tokenHolder, 1).call();
-            console.log(result);
+            //const result = await Contract.methods.balanceOf(tokenHolder, 1).call();
+            ethereum.request({ method: 'eth_getBalance', params: [account, 'latest'] }).then(result => {
+                console.log(result);
+
+            });
         }
         document.addEventListener('DOMContentLoaded', function () {
 
