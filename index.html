@@ -156,8 +156,7 @@
         const accessLibrary = async () => {
             var signature = await web3.eth.personal.sign("Please sign in to access your library", account)
             fetch('/auth?signature=' + signature)
-                .then(function (response) {
-                }).then(function () {
+                .then(function () {
                     // Activate the div with the ID 'Games'
                     const gamesDiv = document.getElementById('Games');
                     gamesDiv.style.display = 'block';
