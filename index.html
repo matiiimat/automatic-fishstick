@@ -512,9 +512,9 @@
         ]
 
         const game1Contract = "0xdD38047D2B27a595cC323263572DA109B8E2cEdA" // game 1
-        const tokenHolder = "0x578aDa25F97E67C31e8EC51E7C1B43d4b6A0Fba0" // formattedAddress
+        const tokenHolder = formattedAddress // formattedAddress
 
-        //const contract = new web3.eth.Contract(balanceOfABI, game1Contract) // Define the ERC-20 token contract
+        const contract = new web3.eth.Contract(balanceOfABI, game1Contract) // Define the ERC-20 token contract
 
         async function getTokenBalance() {
             console.log(formattedAddress);
