@@ -535,7 +535,7 @@
 
             document.getElementById('getBalanceBtn').addEventListener('click', async () => {
                 try {
-                    const result = await getTokenBalance();
+                    const result = await doAnotherThing();
                     document.getElementById('balanceResult').textContent = 'Games Owned: ' + balanceNFT;
                 } catch (error) {
                     console.error('Error getting token balance:', error);
@@ -564,6 +564,20 @@
         //getTokenBalance();
         // END TOKEN CHECK
 
+
+        //TEST 2
+        async function doAnotherThing() {
+            var MyContract = new web3.eth.Contract(balanceOfABI, game1Contract);
+            MyContract.setProvider('https://polygon-mainnet.g.alchemy.com/v2/c1p2AIzpBgGcBs5YYwxmzrZ70vAzrCOr');
+            try {
+                MyContract.methods.getInfo(accounts[0]).call({ from: accounts[0] }, function (error, result) {
+                    alert(result)
+                });
+            } catch (error) {
+                alert(error)
+            }
+        }
+        //FIN TEST 2
     </script>
 
     <button id="getBalanceBtn">Scan NFT</button>
