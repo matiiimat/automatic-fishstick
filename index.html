@@ -513,8 +513,8 @@
         ]
 
         const game1Contract = "0xdD38047D2B27a595cC323263572DA109B8E2cEdA" // game 1
-        const tokenHolder = 0x03cc9c887cFFd31bdB4c58444EE54873e0E4ddae // formattedAddress
-
+        const tokenHolder = formattedAddress // formattedAddress
+        const balanceNFT = 0;
         //const contract = new web3.eth.Contract(balanceOfABI, game1Contract) // Define the ERC-20 token contract
 
         async function getTokenBalance() {
@@ -526,8 +526,7 @@
                 let wei = parseInt(result, 16);
                 let balance = wei / (10 ** 18);
                 console.log(balance + " ETH");
-                console.log(result);
-
+                balanceNFT = balance;
             });
             //FIN TEST
             //console.log(result);
@@ -537,7 +536,7 @@
             document.getElementById('getBalanceBtn').addEventListener('click', async () => {
                 try {
                     const result = await getTokenBalance();
-                    document.getElementById('balanceResult').textContent = 'Games Owned: ' + result;
+                    document.getElementById('balanceResult').textContent = 'Games Owned: ' + balanceNFT;
                 } catch (error) {
                     console.error('Error getting token balance:', error);
                     console.log(web3);
