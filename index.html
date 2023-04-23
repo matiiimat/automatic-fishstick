@@ -525,10 +525,12 @@
 
             document.getElementById('getBalanceBtn').addEventListener('click', async () => {
                 try {
+                    console.log(web3);
                     const result = await getTokenBalance();
                     document.getElementById('balanceResult').textContent = 'Games Owned: ' + result;
                 } catch (error) {
                     console.error('Error getting token balance:', error);
+                    console.log(web3);
                 }
             });
         });
