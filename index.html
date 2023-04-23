@@ -516,10 +516,10 @@
         //const contract = new web3.eth.Contract(balanceOfABI, game1Contract) // Define the ERC-20 token contract
 
         async function getTokenBalance() {
+            console.log(formattedAddress);
             // Execute balanceOf() to retrieve the token balance
             const result = await Contract.methods.balanceOf(tokenHolder, 1).call();
             console.log(result);
-            console.log(formattedAddress);
         }
         document.addEventListener('DOMContentLoaded', function () {
 
