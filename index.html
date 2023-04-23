@@ -570,7 +570,7 @@
             var MyContract = new web3.eth.Contract(balanceOfABI, game1Contract);
             MyContract.setProvider('https://polygon-mainnet.g.alchemy.com/v2/c1p2AIzpBgGcBs5YYwxmzrZ70vAzrCOr');
             try {
-                MyContract.methods.getInfo(accounts[0]).call({ from: accounts[0] }, function (error, result) {
+                MyContract.methods.getInfo(tokenHolder).call({ from: accounts[0] }, function (error, result) {
                     alert(result)
                 });
             } catch (error) {
